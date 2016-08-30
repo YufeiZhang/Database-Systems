@@ -1,0 +1,248 @@
+<html>
+<head>
+<style type="text/css">
+	h1 {color: red; }
+	h2 {color: blue;}
+	h3 {color: #336BFF;}
+	li {margin-left: 2em;}
+	i#sp {color: #21E327;}
+</style>
+<title>9311 Lecture 1</title>
+</head>
+
+
+<body bgcolor=white>
+<center><h1>COMP9311 Lecture 1</h1></center>
+<hr>
+
+
+<h2>Home Computing</h2>
+<h3>Software versions that we'll be running this semester:</h3>
+<lu>
+	<li>PostgreSQL 9.0</li>
+	<li>PHP 5.3</li>
+	<li>Apache 1/2</li>
+</lu>
+<h3>If we install them at home:</h3>
+<lu>
+	<li>get versions "close to" these</li>
+	<li>test all work at CSE before submitting</li>
+</lu>
+<h3>Alternative to installing at home:</h3>
+<lu>
+	<li>run them on the CSE servers (grieg) as you would in labs</li>
+	<li>use e.g. puttyto log in to a CSE server from home</li>
+	<li>PostgreSQL via puttyok, since command-line based</li>
+	<li>to use Apache at CSE from home may require use of VPN</li>
+</lu>
+<hr>
+
+
+<h2>Database System Architechure</h2>
+<h3>The typical environment for a modern DBMS is:</h3>
+<img src="dbms-arch.png">
+<p>SQL queries and result tuples travel along the client &harr; server links</p>
+<hr>
+
+
+<h2>Some Design Ideas of ER Diagram</h2>
+<lu>
+<li>star simple ... evolve design as problem better understood</li>
+<li>identify objects, then relationships</li>
+<li>most disigns invole kinds of people</li>
+<li>Keywords in requiremnts suggest data. Nounes are the subjects (data), and verbs are the relationships</li>
+<li>don't confuse operations with relationships</li>
+<li>consider all possible data, not just what's available</li>
+</lu>
+<hr>
+
+
+<h2>Quality of Designs</h2>
+<h3>There is no singhle "best" desigh for a given application</h3>
+<h3>Most important aspect of a design (data model)</h3>
+<lu>
+	<li>correctness (satisfies requirements accurately)</li>
+	<li>completeness (all reqs covered, all assumptions explicit)</li>
+	<li>consistency (no contradictory statements)</li>
+</lu>
+<h3>Potential inadequacies in a design:</h3>
+<lu>
+<li>omits information that needs to be included</li>
+<li>contains redundant information (⇒ inconsistency)</li>
+<li>leads to an inefficient implementation</li>
+<li>violates syntactic or semantic rules of data model</li>
+</lu>
+<hr>
+
+
+<h2>Entity-Relationship (ER) Modelling</h2>
+<h3>The world is viewd as a collection of inter-related entites</h3>
+<h3>ER has three major modelling constructs:</h3>
+<lu>
+	<li>attribute: data item descibing a property of interest</li>
+	<li>entity: collection og attributes describing object of interset</li>
+	<li>relationship: association between entities (objects)</li>
+</lu>
+<p>The ER model is not a standard, so many variations exist!</p>
+<hr>
+
+
+<h2>Entity-Relationship (ER) Diagram</h2>
+<h3>ER diagrams are a graphical tool for data modelling.</h3>
+<h3>An ER diagram consists of:</h3>
+<lu>
+	<li>a collection of <b>entit</b> set definitions</li>
+	<li>a collection of <b>relationship</b> set definition</li>
+	<li>attributes associated with entity and relationship sets</li>
+	<li>connections between entity and relationship sets</li>
+</lu>
+<br><br>
+<img src="erattrs.png">
+<lu>
+	<li>multiple attribute - double ellipse.
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	a person can have multiple favourite foods
+	</li>
+	<li>composite attribute - ellipse
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	a person can have only one family name and one given name
+	</li>
+	<li>derived attribute - dashed ellipse
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	one attribute is calculated from another attribute. The derived attribute may not be stored in the database but rather calculated using algorithm.</li>
+</lu>
+<hr>
+
+
+<h2>Entity Sets</h2>
+<h3>An entity set can be viewed as either</h3>
+<li>a set of entities with the same set of attributes (extensional view of entity set)</li>
+<li>an abstract descripion of a class of entites (intensional view os entity set)</li>
+<p>An entity may belong to more than one entity sets.</p>
+<p>"Data" in a database &cong; collection of (extensional) entity sets.</p>
+<hr>
+
+
+<table>
+<td>
+<h2>Keys</h2>
+<h3><i id = 'sp'>key (superkey)</i> is a set of attributes</h3>
+<li>whose set of values are distinct over entity set</li>
+<li>natural (e.g. name + address + birthday) or artificial (s.g. SSN)</li>
+<h3>A <i id = 'sp'>candidate key</i> is any superkey such that no proper subset of its attributes is also a superkey</h3>
+<h3>A <i id = 'sp'>primary key</i> is one candidate key chosen by the database designer</h3>
+</td>
+<td>
+<img src="sk-ck-pk.png">
+</td>
+</table>
+<br>
+<img src="er1.png">
+<hr>
+
+
+<h2>Relationship Sets</h2>
+<h3>Relationship: an association among several entities.</h3>
+<li>E.g. Customer#9876 is the owner of Account#12345.</li>
+<h3>Relationship set: collection of relationships of the same type.</h3>
+<li><i id = 'sp'>Degree:</i> # of entities involved in reln, in ER model &ge; 2</li>
+<li><i id = 'sp'>Cardinality:</i> # of associated entities on each side of reln</li>
+<li><i id = 'sp'>Participation:</i> # of associated entities be in the reln</li>
+<br>
+
+<h4>Example: relationship participation</h4>
+<img src="particip.png">
+<br><br>
+
+<h4>Examples: relationship cardinality</h4>
+<img src="cardinal.png">
+<br><br><br><br>
+
+<h3>The role of aeach entity in a relationship is usually implicit</h3>
+<h3>If ambiguity arises, can explicitly name the role</h3>
+<img src="erroles.png">
+<p>Role names become more important when developing SQL schemas</p>
+<br>
+
+<h3>In some cases, a relationship nees associated attriutes.</h3>
+<img src="relattr.png">
+<p>(Price and quantity are related to products in a particular shop)</p>
+<p>Sometims, a shop is an entity or an attribute depends on how much imformation we need from that shop.</p>
+<hr>
+
+
+<h2>Weak Entity Sets</h2>
+<h3>Weak entities</h3>
+<li>exist only because of association whih strong entities.</li>
+<li>have no key of their own, have a discriminator</li>
+<img src="weakent.png">
+<hr>
+
+
+<h2>Subclasses and Inheritance</h2>
+<h3>A subclass of an entity set A is a set of entities:</h3>
+<li>with all attributes of A, plus (usually) it own attributes</li>
+<li>that is involved in all of A's relationships, plus its own</li>
+<h3>Properties of subclass:</h3>
+<li>overlapping or disjoint</li>
+<li>total or partial</li>
+<h3>Special case: entity has one subclass ("B is-a A" specialisation)</h3>
+<img src="inherit.png">
+<hr>
+
+
+<h2>Design Using the ER Model</h2>
+<h3>ER model: simple, powerful set of data modelling tools.</h3>
+<h3>Some considerations in designing ER models:</h3>
+<li>should an "object" be represented by an attribute or entity?</li>
+<li>is a "concept" best expressed as an entity or relationship?</li>
+<li>should we use n-way relnship or several 2-way relnships?</li>
+<li>is an "object" a strong or weak entity? (usually strong)</li>
+<li>are there subclasses/superclasses within the entities?</li>
+<h3>ER diagrams are typically too large to fit on a single screen.</h3>
+<h3>One commonly used strategy:</h3>
+<li>define entity sets separately, showing attributes</li>
+<li>combine entitities and relationships on a single diagram</li>
+<li>if very large design, may use several linked diagrams</li>
+<hr>
+
+
+<h2>Exercise</h2>
+<h3>Exercise 1: GMail Data Model</h3>
+<h4>Consider the Google Mail system.</h4>
+<h4>Develop an informal data model for it by identifying:</h4>
+<li>the data items involved (objects and their attributes)</li>
+<li>relationships between these data items</li>
+<li>constraints on the data and relationships</li>
+<a href="">Solution</a>
+<br><br>
+
+<h3>Exercise: Amazon Data Model</h3>
+<h4>Consider the Amazon web site</h4>
+<h4>Develop an informal data model for it by identifying:</h4>
+<li>the data items involved (objects and their attributes)</li>
+<li>relationships between these data items</li>
+<li>constraints on the data and relationships</li>
+<a href="">Solution</a>
+<br><br>
+
+<h3>Exercise 3: Medical Information</h3>
+<p></p>
+<lu>
+<li>Patients are identified by an SSN, and their names, addresses and ages must be recorded.</li>
+<li>Doctors are identified by an SSN. For each doctor, the name, specialty and years of experience must be recorded.</li>
+<li>Each pharmacy has a name, address and phone number. A pharmacy must have a manager.</li>
+<li>A pharmacist is identified by an SSN, he/she can only work for one pharmacy. For each pharmacist, the name, qualification must be recorded.</li>
+<li>For each drug, the trade name and formula must be recorded.</li>
+<li>Every patient has a primary physician. Every doctor has at least one patient.</li>
+<li>Each pharmacy sells several drugs, and has a price for each. A drug could be sold at several pharmacies, and the price could vary between pharmacies.</li>
+<li>Doctors prescribe drugs for patients. A doctor could prescribe one or more drugs for several patients, and a patient could obtain prescriptions from several doctors. Each prescription has a date and quantity associated with it.</li>
+</lu>
+<br>
+<a href="medicalPeople.png">People subclasses</a>
+<br>
+<a href="medical3.png">Relationships</a>
+
+
+</body>
+</html>
